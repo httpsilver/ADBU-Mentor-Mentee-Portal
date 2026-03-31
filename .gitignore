@@ -1,0 +1,80 @@
+# 🔒 Environment & Sensitive Files
+
+.env
+.env.*
+php/config.local.php
+
+# 🔑 Credentials / Secrets
+
+*.key
+*.pem
+*.crt
+
+# 📦 Dependency Directories
+
+node_modules/
+vendor/
+
+# 📁 User Uploads (DO NOT TRACK)
+
+assets/uploads/
+assets/uploads/*
+uploads/
+
+# 🧾 Logs & Debug Files
+
+*.log
+logs/
+error_log
+debug.log
+
+# 💻 OS Generated Files
+
+.DS_Store
+Thumbs.db
+
+# 🧠 IDE / Editor Settings
+
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# ⚙️ Cache & Temp Files
+
+.cache/
+tmp/
+temp/
+
+# 🧪 Testing Files
+
+coverage/
+.phpunit.result.cache
+
+# 🗄️ Database Files
+
+
+*.sql.bak
+*.sql.gz
+*.dump
+
+# 🚫 Archives
+
+*.zip
+*.tar
+*.tar.gz
+*.rar
+
+# 🔥 Server-specific (optional)
+
+wamp/
+xampp/
+laragon/
+
+# 📝 Misc
+
+*.bak
+*.swp
+*.tmp

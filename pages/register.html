@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register – ADBU MentorConnect</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="../css/styles.css">
+  <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+  <style>
+    .req { display:flex; align-items:center; gap:0.375rem; font-size:0.8125rem; color:var(--text-muted); margin-top:0.25rem; }
+    .req.met  { color:var(--success); }
+    .req.fail { color:var(--danger); }
+    .strength-bar { height:0.25rem; border-radius:99px; background:var(--border); margin-top:0.5rem; overflow:hidden; }
+    .strength-fill { height:100%; border-radius:99px; transition:all .3s; width:0; }
+  </style>
+</head>
+<body style="display:flex; flex-direction:column; min-height:100vh;">
+<div class="auth-bg-pattern"></div>
+
+<button class="theme-icon-btn" title="Toggle theme"
+  style="position:fixed;top:1rem;right:1rem;z-index:10;width:2.5rem;height:2.5rem;
+         border-radius:50%;background:var(--card);border:1px solid var(--border);
+         color:var(--text);font-size:1.1rem;cursor:pointer;display:flex;
+         align-items:center;justify-content:center;box-shadow:var(--shadow-sm)">
+  <i class="bi bi-moon-fill"></i>
+</button>
+
+<div class="auth-page" style="flex:1;">
+  <div class="auth-card animate-in">
+
+    <div class="auth-logo">
+      <img src="../assets/logo.png" alt="ADBU" class="auth-logo-img">
+      <div class="auth-logo-text">ADBU <span>MentorConnect</span></div>
+    </div>
+
+    <h1 class="auth-title">Create Account</h1>
+    <p class="auth-subtitle">Join the ADBU MentorConnect platform</p>
+
+    <div id="regAlert" style="display:none;margin-bottom:1rem"></div>
+
+    <div class="form-group">
+      <label class="form-label">Full Name</label>
+      <div class="input-group-custom">
+        <i class="bi bi-person input-icon"></i>
+        <input type="text" id="regName" class="form-control-custom" placeholder="Your full name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Email Address</label>
+      <div class="input-group-custom">
+        <i class="bi bi-envelope input-icon"></i>
+        <input type="email" id="regEmail" class="form-control-custom" placeholder="you@dbuniversity.ac.in">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Role</label>
+      <div class="input-group-custom">
+        <i class="bi bi-person-badge input-icon"></i>
+        <select id="regRole" class="form-control-custom" style="padding-left:2.375rem">
+          <option value="mentee">Student (Mentee)</option>
+          <option value="mentor">Faculty (Mentor)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <div class="input-group-custom">
+        <i class="bi bi-lock input-icon"></i>
+        <input type="password" id="regPassword" class="form-control-custom" placeholder="Create a password" autocomplete="new-password">
+        <i class="bi bi-eye input-icon-right" id="toggleRegPwd" style="cursor:pointer"></i>
+      </div>
+      <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+      <div id="req-len"  class="req"><i class="bi bi-circle"></i> At least 8 characters</div>
+      <div id="req-num"  class="req"><i class="bi bi-circle"></i> At least 1 number</div>
+      <div id="req-spec" class="req"><i class="bi bi-circle"></i> At least 1 special character</div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Confirm Password</label>
+      <div class="input-group-custom">
+        <i class="bi bi-lock-fill input-icon"></i>
+        <input type="password" id="regConfirm" class="form-control-custom" placeholder="Repeat password" autocomplete="new-password">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="h-captcha" data-sitekey="site_key_here"></div>
+      <div id="captchaError" style="display:none;color:var(--danger);font-size:0.8125rem;margin-top:0.25rem">
+        <i class="bi bi-exclamation-circle me-1"></i>Please complete the CAPTCHA.
+      </div>
+    </div>
+
+    <button class="btn-primary-custom w-100 justify-content-center" id="regBtn"
+            style="height:2.875rem;font-size:0.9375rem">
+      <i class="bi bi-person-plus"></i> Create Account
+    </button>
+
+    <p style="text-align:center;font-size:0.875rem;color:var(--text-muted);margin-top:1.25rem">
+      Already have an account?
+      <a href="../index.html" style="font-weight:600;margin-left:0.25rem">Sign in</a>
+    </p>
+  </div>
+</div>
+
+<footer class="auth-footer">
+  <img src="../assets/logo.png" alt="Don Bosco University">
+  <span>Copyright &copy; 2026 Don Bosco University, All Rights Reserved.</span>
+  <a href="about.php">About</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  document.getElementById('toggleRegPwd').addEventListener('click', function () {
+    const el = document.getElementById('regPassword');
+    const isText = el.type === 'text';
+    el.type = isText ? 'password' : 'text';
+    this.className = isText ? 'bi bi-eye input-icon-right' : 'bi bi-eye-slash input-icon-right';
+  });
+
+  const colors = ['','#EF4444','#F59E0B','#3B82F6','#10B981','#059669'];
+  const labels = ['','Very Weak','Weak','Fair','Strong','Very Strong'];
+  document.getElementById('regPassword').addEventListener('input', function () {
+    const v = this.value;
+    const len  = v.length >= 8;
+    const num  = /[0-9]/.test(v);
+    const spec = /[^a-zA-Z0-9]/.test(v);
+    const upper = /[A-Z]/.test(v);
+    setReq('req-len',  len);
+    setReq('req-num',  num);
+    setReq('req-spec', spec);
+    const score = [v.length > 0, len, num, spec, upper && len].filter(Boolean).length;
+    const fill = document.getElementById('strengthFill');
+    fill.style.width = (score * 20) + '%';
+    fill.style.background = colors[score] || '';
+  });
+
+  function setReq(id, met) {
+    const el = document.getElementById(id);
+    el.className = 'req ' + (met ? 'met' : (el.classList.contains('req') && !el.classList.contains('met') ? '' : 'fail'));
+    el.querySelector('i').className = 'bi ' + (met ? 'bi-check-circle-fill' : 'bi-circle');
+  }
+
+  document.getElementById('regBtn').addEventListener('click', async () => {
+    const alertEl = document.getElementById('regAlert');
+    const name     = document.getElementById('regName').value.trim();
+    const email    = document.getElementById('regEmail').value.trim();
+    const role     = document.getElementById('regRole').value;
+    const password = document.getElementById('regPassword').value;
+    const confirm  = document.getElementById('regConfirm').value;
+    const captcha  = (typeof hcaptcha !== 'undefined') ? hcaptcha.getResponse() : '';
+
+    alertEl.style.display = 'none';
+    document.getElementById('captchaError').style.display = 'none';
+
+    if (!name || !email || !password) { showAlert(alertEl, 'Please fill in all fields.', 'error'); return; }
+    if (password !== confirm) { showAlert(alertEl, 'Passwords do not match.', 'error'); return; }
+    if (!captcha) { document.getElementById('captchaError').style.display = 'block'; return; }
+
+    const btn = document.getElementById('regBtn');
+    setButtonLoading(btn, true, 'Creating account...');
+    const res = await API.post('../php/register.php', { full_name: name, email, role, password, confirm_password: confirm, 'h-captcha-response': captcha });
+    setButtonLoading(btn, false);
+
+    if (res.success) {
+      showAlert(alertEl, res.message || 'Account created! Redirecting…', 'success');
+      setTimeout(() => window.location.href = res.redirect || '../index.html', 1200);
+    } else {
+      showAlert(alertEl, res.message || 'Registration failed.', 'error');
+      if (typeof hcaptcha !== 'undefined') hcaptcha.reset();
+    }
+  });
+
+  function showAlert(el, msg, type) {
+    el.style.display = 'flex';
+    el.className = `alert-custom alert-${type}`;
+    el.innerHTML = `<i class="bi bi-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>${msg}`;
+  }
+</script>
+</body>
+</html>
