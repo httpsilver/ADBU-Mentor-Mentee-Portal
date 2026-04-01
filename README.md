@@ -136,7 +136,7 @@ http://localhost/mentor-portal/
 ## 🎥 Video Demonstration
 
 👉 **Watch the Project Demo:**
-(Paste your YouTube link here)
+https://youtu.be/nrt7kcxxgdk?si=Y3yXIXFaCPGh7SV1
 
 ---
 
